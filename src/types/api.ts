@@ -1,4 +1,4 @@
-export interface IFilm {
+interface IFilm {
   characters: string[] | IPeople[];
   created: Date;
   director: string;
@@ -14,7 +14,7 @@ export interface IFilm {
   url: string;
   vehicles: string[] | IVehicle[];
 }
-export interface IPeople {
+interface IPeople {
   birth_year: string;
   eye_color: string;
   films: string[] | IFilm[];
@@ -48,7 +48,7 @@ export interface IPlanet {
   terrain: string;
   url: string;
 }
-export interface ISpecie {
+interface ISpecie {
   average_height: string;
   average_lifespan: string;
   classification: string;
@@ -65,7 +65,7 @@ export interface ISpecie {
   skin_colors: string;
   url: string;
 }
-export interface IStarship {
+interface IStarship {
   MGLT: string;
   cargo_capacity: string;
   consumables: string;
@@ -85,7 +85,7 @@ export interface IStarship {
   starship_class: string;
   url: string;
 }
-export interface IVehicle {
+interface IVehicle {
   cargo_capacity: string;
   consumables: string;
   cost_in_credits: string;
@@ -104,9 +104,16 @@ export interface IVehicle {
   vehicle_class: string;
 }
 
-export type PersonResponse = {
+export type PeopleResponse = {
   count: number;
   next: string | null;
   previous: string | null;
   results: IPeople[];
 };
+
+export type PersonResponse = IPeople;
+export type FilmResponse = IFilm;
+export type PlanetResponse = IPlanet;
+export type SpecieResponse = ISpecie;
+export type VehicleResponse = IVehicle;
+export type IStarshipResponse = IStarship;

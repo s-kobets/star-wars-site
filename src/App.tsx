@@ -5,7 +5,7 @@ import { Box } from "@semcore/ui/flex-box";
 
 export default function App() {
   return (
-    <div>
+    <Box py={4}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -13,7 +13,7 @@ export default function App() {
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
-    </div>
+    </Box>
   );
 }
 
