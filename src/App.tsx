@@ -1,5 +1,7 @@
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import { Home, Person } from "./pages";
+import { NoData } from "@semcore/ui/widget-empty";
+import { Box } from "@semcore/ui/flex-box";
 
 export default function App() {
   return (
@@ -25,11 +27,14 @@ function Layout() {
 
 function NoMatch() {
   return (
-    <div>
-      <h2>Nothing to see here!</h2>
-      <p>
+    <NoData
+      h="100vh"
+      type="nothing-found"
+      description="Try changing your filters."
+    >
+      <Box mt={4}>
         <Link to="/">Go to the home page</Link>
-      </p>
-    </div>
+      </Box>
+    </NoData>
   );
 }
