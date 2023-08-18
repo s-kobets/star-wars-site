@@ -92,7 +92,7 @@ export function Person() {
 
       {!error && (
         <SpinContainer loading={loading} hMin={300}>
-          <Card m="2%">
+          <Card mx="2%" my={1}>
             <Card.Header tag={Flex} alignItems="center">
               <Button tag={Link} use="tertiary" to="/" theme="muted">
                 <ArrowLeftL />
@@ -100,9 +100,11 @@ export function Person() {
               <Card.Title tag="p" w="100%" bold size={600} textAlign="center">
                 {data?.name}
               </Card.Title>
-              <Flex gap={2}>
+              <Flex gap={2} position="relative">
                 {isEdit ? (
                   <Button
+                    position="absolute"
+                    left="-60px"
                     theme="success"
                     use="primary"
                     onClick={handleSaveForm}

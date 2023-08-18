@@ -6,7 +6,11 @@ import { memo } from "react";
 const FilterInner = ({ value, onChange }: InputValueProps) => {
   return (
     <Flex tag="label" alignItems="center" gap={4} mx="2%">
-      <Text size={300} flex="0 0 auto">
+      <Text
+        size={300}
+        flex="0 0 auto"
+        color="var(--intergalactic-text-primary)"
+      >
         Search name:
       </Text>
       <Input size="l">

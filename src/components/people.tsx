@@ -16,7 +16,13 @@ import { Filter } from "./filter";
 import { Avatar } from "./avatar";
 import { Link } from "react-router-dom";
 
+import logoWhite from "images/logo-white.png";
+import logoBlack from "images/logo-black.png";
+import { useContextTokens } from "@semcore/utils/lib/ThemeProvider";
+
 export function People() {
+  const tokens = useContextTokens();
+  const isDark = tokens ? tokens["--bg-main"] !== "white" : false;
   const [searchName, setSearchName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { data, loading, error } = useData<PeopleResponse>(
@@ -39,6 +45,13 @@ export function People() {
 
   return (
     <>
+      <Flex mb={4} justifyContent="center" style={{ overflowX: "hidden" }}>
+        {isDark ? (
+          <img src={logoBlack} width="700" height="400" alt="logo" />
+        ) : (
+          <img src={logoWhite} width="700" height="400" alt="logo" />
+        )}
+      </Flex>
       <Filter value={searchName} onChange={handleSearchName} />
 
       {error && (
@@ -52,7 +65,7 @@ export function People() {
       )}
 
       {!error && (
-        <SpinContainer loading={loading} hMin={300}>
+        <SpinContainer loading={true} hMin={300}>
           <Flex py={6} flexWrap>
             {!data?.results.length && (
               <NoData
@@ -88,12 +101,20 @@ export function People() {
                 </Flex>
               </Card>
             ))}
+
+            <Pagination
+              mx="2%"
+              currentPage={currentPage}
+              onCurrentPageChange={setCurrentPage}
+              totalPages={totalPages}
+            >
+              <Pagination.FirstPage size="l" />
+              <Pagination.PrevPage size="l" />
+              <Pagination.NextPage size="l" />
+              <Pagination.PageInput size="l" />
+              <Pagination.TotalPages size={300} />
+            </Pagination>
           </Flex>
-          <Pagination
-            currentPage={currentPage}
-            onCurrentPageChange={setCurrentPage}
-            totalPages={totalPages}
-          />
         </SpinContainer>
       )}
     </>
