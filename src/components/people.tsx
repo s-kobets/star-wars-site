@@ -81,7 +81,7 @@ export function People() {
                     bottom={0}
                     left={0}
                   />
-                  <Avatar />
+                  <Avatar name={person.name} />
                   <Text bold py={2}>
                     {person.name}
                   </Text>
