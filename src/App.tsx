@@ -26,6 +26,8 @@ export default function App() {
 const lightTheme = {
   "--bg-main": "white",
   "--intergalactic-bg-primary-neutral": "#ffffff",
+  "--intergalactic-tooltip-default": "#ffffff",
+  "--intergalactic-border-secondary": "#e0e1e9",
   "--intergalactic-bg-primary-neutral-hover": "#f4f5f9",
   "--intergalactic-bg-primary-neutral-active": "#e0e1e9",
   "--intergalactic-bg-primary-info": "#008ff8",
@@ -41,6 +43,8 @@ const lightTheme = {
 const darkTheme = {
   "--bg-main": "black",
   "--intergalactic-bg-primary-neutral": "rgba(30, 34, 49, 1)",
+  "--intergalactic-tooltip-default": "rgba(30, 34, 49, 1)",
+  "--intergalactic-border-secondary": "rgba(54, 56, 67, 0.85)",
   "--intergalactic-bg-primary-neutral-hover": "rgba(54, 56, 67, 1)",
   "--intergalactic-bg-primary-neutral-active": "rgba(54, 56, 67, 1)",
   "--intergalactic-bg-primary-info": "#008ff8",
@@ -79,7 +83,7 @@ function Layout() {
           {isDark ? <TimeDayL /> : <TimeNightL />}
         </Button>
 
-        <Tooltip title="play audio">
+        <Tooltip title="play audio" visible>
           <Button onClick={handleChangeAudio} use="tertiary">
             {isPlayAudio ? <PauseL /> : <ChevronRightL />}
           </Button>
