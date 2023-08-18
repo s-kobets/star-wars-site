@@ -65,7 +65,7 @@ export function People() {
       )}
 
       {!error && (
-        <SpinContainer loading={true} hMin={300}>
+        <SpinContainer loading={loading} hMin={300}>
           <Flex py={6} flexWrap>
             {!data?.results.length && (
               <NoData
