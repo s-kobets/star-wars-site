@@ -1,11 +1,11 @@
-import Card from "@semcore/ui/card";
-import { Flex, Box } from "@semcore/ui/flex-box";
-import Pagination from "@semcore/ui/pagination";
-import { Text } from "@semcore/ui/typography";
-import { InputValueProps } from "@semcore/ui/input";
-import Button from "@semcore/ui/button";
-import { Error, NoData } from "@semcore/ui/widget-empty";
-import SpinContainer from "@semcore/ui/spin-container";
+import Card from "@semcore/card";
+import { Flex, Box } from "@semcore/flex-box";
+import Pagination from "@semcore/pagination";
+import { Text } from "@semcore/typography";
+import { InputValueProps } from "@semcore/input";
+import Button from "@semcore/button";
+import { Error, NoData } from "@semcore/widget-empty";
+import SpinContainer from "@semcore/spin-container";
 import ReloadM from "@semcore/icon/Reload/m";
 
 import { useData } from "../hooks";
@@ -101,20 +101,20 @@ export function People() {
                 </Flex>
               </Card>
             ))}
-
-            <Pagination
-              mx="2%"
-              currentPage={currentPage}
-              onCurrentPageChange={setCurrentPage}
-              totalPages={totalPages}
-            >
-              <Pagination.FirstPage size="l" />
-              <Pagination.PrevPage size="l" />
-              <Pagination.NextPage size="l" />
-              <Pagination.PageInput size="l" />
-              <Pagination.TotalPages size={300} />
-            </Pagination>
           </Flex>
+          <Pagination
+            mx="2%"
+            mb={4}
+            currentPage={currentPage}
+            onCurrentPageChange={setCurrentPage}
+            totalPages={totalPages}
+          >
+            <Pagination.FirstPage size="l" />
+            <Pagination.PrevPage size="l" />
+            <Pagination.NextPage size="l" />
+            <Pagination.PageInput size="l" />
+            <Pagination.TotalPages size={300} />
+          </Pagination>
         </SpinContainer>
       )}
     </>

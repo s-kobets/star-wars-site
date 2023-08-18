@@ -11,6 +11,7 @@ export const useData = <T>(url: string) => {
 
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await fetch("https://swapi.dev/api/" + url, {
           signal,
         });

@@ -1,14 +1,15 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { Home, Person } from "./pages";
-import { NoData } from "@semcore/ui/widget-empty";
-import { Box, Flex } from "@semcore/ui/flex-box";
+import { Flex, Box } from "@semcore/flex-box";
+import Tooltip from "@semcore/tooltip";
 import { ThemeProvider } from "@semcore/utils/lib/ThemeProvider";
-import Button from "@semcore/ui/button";
+import Button from "@semcore/button";
 import { useCallback, useEffect, useState } from "react";
 import PauseL from "@semcore/icon/Pause/l";
 import ChevronRightL from "@semcore/icon/ChevronRight/l";
 import TimeNightL from "@semcore/icon/TimeNight/l";
 import TimeDayL from "@semcore/icon/TimeDay/l";
+import { NoMatch } from "pages/404";
 
 export default function App() {
   return (
@@ -52,9 +53,11 @@ const darkTheme = {
   "--intergalactic-overlay-limitation-secondary": "rgba(54, 56, 67, 0.85)",
 };
 
+const style = { backgroundColor: "var(--bg-main)" };
+
 function Layout() {
   const [songRef, setSongRef] = useState<HTMLAudioElement | null>(null);
-  const [isPlayAudio, setIsPlayAudio] = useState(true);
+  const [isPlayAudio, setIsPlayAudio] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -71,38 +74,20 @@ function Layout() {
 
   return (
     <ThemeProvider tokens={isDark ? darkTheme : lightTheme}>
-      <Flex
-        tag="header"
-        px="2%"
-        py={2}
-        justifyContent="right"
-        style={{ backgroundColor: "var(--bg-main)" }}
-      >
+      <Flex tag="header" px="2%" py={2} justifyContent="right" style={style}>
         <Button onClick={handleChangeTheme} use="tertiary">
           {isDark ? <TimeDayL /> : <TimeNightL />}
         </Button>
 
-        <Button onClick={handleChangeAudio} use="tertiary">
-          {isPlayAudio ? <PauseL /> : <ChevronRightL />}
-        </Button>
+        <Tooltip title="play audio">
+          <Button onClick={handleChangeAudio} use="tertiary">
+            {isPlayAudio ? <PauseL /> : <ChevronRightL />}
+          </Button>
+        </Tooltip>
       </Flex>
-      <div style={{ backgroundColor: "var(--bg-main)" }}>
+      <Box style={style}>
         <Outlet />
-      </div>
-    </ThemeProvider>
-  );
-}
-
-function NoMatch() {
-  return (
-    <NoData
-      h="100vh"
-      type="nothing-found"
-      description="Try changing your filters."
-    >
-      <Box mt={4}>
-        <Link to="/">Go to the home page</Link>
       </Box>
-    </NoData>
+    </ThemeProvider>
   );
 }

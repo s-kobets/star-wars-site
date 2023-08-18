@@ -1,6 +1,6 @@
 import UserL from "@semcore/icon/User/l";
 import RobotL from "@semcore/icon/Robot/l";
-import { Flex } from "@semcore/ui/flex-box";
+import { Flex } from "@semcore/flex-box";
 
 export const Avatar = ({ name }: { name?: string }) => {
   const isRobot = name ? /[0-9]/.test(name) : false;

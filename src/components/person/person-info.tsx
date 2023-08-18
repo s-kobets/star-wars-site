@@ -1,10 +1,10 @@
-import Card from "@semcore/ui/card";
+import Card from "@semcore/card";
 import { ReactNode, memo } from "react";
 import { useData } from "../../hooks";
-import Skeleton from "@semcore/ui/skeleton";
-import { Flex } from "@semcore/ui/flex-box";
-import { Text } from "@semcore/ui/typography";
-import Input, { InputValueProps } from "@semcore/ui/input";
+import Skeleton from "@semcore/skeleton";
+import { Flex } from "@semcore/flex-box";
+import { Text } from "@semcore/typography";
+import Input, { InputValueProps } from "@semcore/input";
 
 const PersonInfoInner = ({
   isEdit,

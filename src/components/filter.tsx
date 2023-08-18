@@ -1,6 +1,6 @@
-import { Flex } from "@semcore/ui/flex-box";
-import Input, { InputValueProps } from "@semcore/ui/input";
-import { Text } from "@semcore/ui/typography";
+import { Flex } from "@semcore/flex-box";
+import Input, { InputValueProps } from "@semcore/input";
+import { Text } from "@semcore/typography";
 import { memo } from "react";
 
 const FilterInner = ({ value, onChange }: InputValueProps) => {

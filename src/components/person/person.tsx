@@ -1,19 +1,19 @@
 import { Link, useParams } from "react-router-dom";
-import { Box, Flex } from "@semcore/ui/flex-box";
-import Button from "@semcore/ui/button";
-import { Error, NoData } from "@semcore/ui/widget-empty";
+import { Box, Flex } from "@semcore/flex-box";
+import Button from "@semcore/button";
+import { Error, NoData } from "@semcore/widget-empty";
 import ReloadM from "@semcore/icon/Reload/m";
-import SpinContainer from "@semcore/ui/spin-container";
-import Card from "@semcore/ui/card";
+import SpinContainer from "@semcore/spin-container";
+import Card from "@semcore/card";
 import ArrowLeftL from "@semcore/icon/ArrowLeft/l";
-import { Text } from "@semcore/ui/typography";
+import { Text } from "@semcore/typography";
 import EditL from "@semcore/icon/Edit/l";
 import CloseL from "@semcore/icon/Close/l";
 import { PersonInfo, PersonInfoList } from "./person-info";
 import { PersonResponse } from "types";
 import { useData } from "hooks";
 import { ReactNode, useCallback, useEffect, useState } from "react";
-import { capitalizeFirstLetter } from "helpers/capitalize-first-letter";
+import { capitalizeFirstLetter } from "helpers";
 
 const MAP_KEYS_DESCRIPTION = [
   "birth_year",
@@ -92,7 +92,7 @@ export function Person() {
 
       {!error && (
         <SpinContainer loading={loading} hMin={300}>
-          <Card mx="2%" my={1}>
+          <Card mx="2%" my={2}>
             <Card.Header tag={Flex} alignItems="center">
               <Button tag={Link} use="tertiary" to="/" theme="muted">
                 <ArrowLeftL />
@@ -119,7 +119,7 @@ export function Person() {
             </Card.Header>
 
             <Card.Body>
-              {!data && (
+              {!data && !loading && (
                 <NoData
                   w="100vw"
                   type="nothing-found"
