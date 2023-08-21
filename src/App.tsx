@@ -83,7 +83,7 @@ function Layout() {
           {isDark ? <TimeDayL /> : <TimeNightL />}
         </Button>
 
-        <Tooltip title="play audio" visible>
+        <Tooltip title="play audio">
           <Button onClick={handleChangeAudio} use="tertiary">
             {isPlayAudio ? <PauseL /> : <ChevronRightL />}
           </Button>
