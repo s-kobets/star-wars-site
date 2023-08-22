@@ -104,16 +104,17 @@ interface IVehicle {
   vehicle_class: string;
 }
 
-export type PeopleResponse = {
+export type Response<T> = {
   count: number;
   next: string | null;
   previous: string | null;
-  results: IPeople[];
+  results: T[];
 };
 
+export type PeopleResponse = Response<IPeople>;
 export type PersonResponse = IPeople;
-export type FilmResponse = IFilm;
-export type PlanetResponse = IPlanet;
-export type SpecieResponse = ISpecie;
-export type VehicleResponse = IVehicle;
-export type IStarshipResponse = IStarship;
+export type FilmResponse = Response<IFilm>;
+export type PlanetResponse = Response<IPlanet>;
+export type SpecieResponse = Response<ISpecie>;
+export type VehicleResponse = Response<IVehicle>;
+export type StarshipResponse = Response<IStarship>;

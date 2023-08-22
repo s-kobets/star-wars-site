@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
-export const useData = <T>(url: string) => {
+export const useData = <T>(url: string, isRequest = true) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    if (!isRequest) return;
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -36,7 +37,7 @@ export const useData = <T>(url: string) => {
     return () => {
       controller.abort();
     };
-  }, [url]);
+  }, [isRequest, url]);
 
   return { data, loading, error };
 };

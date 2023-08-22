@@ -40,9 +40,6 @@ describe("App routing", () => {
       </MemoryRouter>
     );
 
-    debug();
-    console.log(1);
-
     const noMatchElement = getByText(/nothing/i);
     expect(noMatchElement).toBeInTheDocument();
   });

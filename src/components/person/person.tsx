@@ -12,22 +12,13 @@ import CloseL from "@semcore/icon/Close/l";
 import { PersonInfo, PersonInfoList } from "./person-info";
 import { PersonResponse } from "types";
 import { useData } from "hooks";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { Fragment, ReactNode, useCallback, useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "helpers";
+import { MAP_KEYS_DESCRIPTION, MAP_KEYS_LIST_ENUM } from "types/consts";
 
-const MAP_KEYS_DESCRIPTION = [
-  "birth_year",
-  "eye_color",
-  "gender",
-  "hair_color",
-  "height",
-  "mass",
-  "skin_color",
-] as Partial<keyof PersonResponse>[];
-
-const MAP_KEYS_LIST = ["films", "species", "starships", "vehicles"] as Partial<
-  keyof PersonResponse
->[];
+const MAP_KEYS_LIST = Object.keys(MAP_KEYS_LIST_ENUM).filter(
+  (name) => !["planet"].includes(name)
+) as Partial<keyof PersonResponse>[];
 
 const Title = (props: { children: ReactNode }) => (
   <Text tag="p" textAlign="center" size={500} bold {...props} />
@@ -39,7 +30,7 @@ export function Person() {
     `people/${params.id}`
   );
   const [isEdit, setIsEdit] = useState(false);
-  const [form, setForm] = useState<Record<string, string>>({});
+  const [form, setForm] = useState<Record<string, string | string[]>>({});
   const localStorageKey = `person-${params.id}`;
 
   useEffect(() => {
@@ -50,7 +41,8 @@ export function Person() {
     }
     if (data) {
       setForm(
-        MAP_KEYS_DESCRIPTION.reduce(
+        Object.keys(data).reduce(
+          // @ts-ignore
           (acc, key) => ({ ...acc, [key]: data[key] }),
           {}
         )
@@ -66,9 +58,8 @@ export function Person() {
   );
 
   const handleChangeFormItem = useCallback(
-    (key: keyof PersonResponse) => (value: string) => {
-      form[key as string] = value;
-      setForm({ ...form });
+    (key: keyof PersonResponse) => (value: string | string[]) => {
+      setForm({ ...form, [key as string]: value });
     },
     [form]
   );
@@ -77,6 +68,8 @@ export function Person() {
     localStorage.setItem(localStorageKey, JSON.stringify(form));
     setIsEdit(false);
   }, [form, localStorageKey]);
+
+  console.log(123, form);
 
   return (
     <>
@@ -128,7 +121,12 @@ export function Person() {
               )}
 
               <Title>Home world</Title>
-              <PersonInfoList title="planet" data={data?.homeworld} />
+              <PersonInfoList
+                title={MAP_KEYS_LIST_ENUM["planet"]}
+                data={data?.homeworld}
+                isEdit={isEdit}
+                onChange={handleChangeFormItem("homeworld")}
+              />
 
               <Title>Description</Title>
               <Flex flexWrap>
@@ -146,17 +144,22 @@ export function Person() {
                   : null}
               </Flex>
 
-              {data
+              {form
                 ? MAP_KEYS_LIST.map((key) => {
                     if (
-                      Array.isArray(data[key]) &&
-                      (data[key] as string[])?.length
+                      Array.isArray(form[key]) &&
+                      (form[key] as string[])?.length
                     ) {
                       return (
-                        <>
+                        <Fragment key={key}>
                           <Title>{capitalizeFirstLetter(key)}</Title>
-                          <PersonInfoList title="name" data={data[key]} />
-                        </>
+                          <PersonInfoList
+                            title={key.slice(0, -1) as MAP_KEYS_LIST_ENUM}
+                            data={form[key]}
+                            isEdit={isEdit}
+                            onChange={handleChangeFormItem(key)}
+                          />
+                        </Fragment>
                       );
                     }
                     return null;
