@@ -62,7 +62,9 @@ const style = { backgroundColor: "var(--bg-main)" };
 function Layout() {
   const [songRef, setSongRef] = useState<HTMLAudioElement | null>(null);
   const [isPlayAudio, setIsPlayAudio] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(
+    localStorage.getItem("isDark") === "true" ?? false
+  );
 
   useEffect(() => {
     setSongRef(document.getElementById("song") as HTMLAudioElement);
@@ -74,6 +76,7 @@ function Layout() {
 
   const handleChangeTheme = useCallback(() => {
     setIsDark(!isDark);
+    localStorage.setItem("isDark", String(!isDark));
   }, [isDark]);
 
   return (
