@@ -3,10 +3,8 @@ import { Flex, Box } from "@semcore/flex-box";
 import Pagination from "@semcore/pagination";
 import { Text } from "@semcore/typography";
 import { InputValueProps } from "@semcore/input";
-import Button from "@semcore/button";
-import { Error, NoData } from "@semcore/widget-empty";
+import { NoData } from "@semcore/widget-empty";
 import SpinContainer from "@semcore/spin-container";
-import ReloadM from "@semcore/icon/Reload/m";
 
 import { useData } from "../hooks";
 import { PeopleResponse } from "../types";
@@ -19,16 +17,29 @@ import { Link } from "react-router-dom";
 import logoWhite from "images/logo-white.png";
 import logoBlack from "images/logo-black.png";
 import { useContextTokens } from "@semcore/utils/lib/ThemeProvider";
+import { URL, maxPerson } from "helpers/consts";
+import { ErrorLayout } from "./layout";
+
+const searchParams = new URLSearchParams();
 
 export function People() {
   const tokens = useContextTokens();
   const isDark = tokens ? tokens["--bg-main"] !== "white" : false;
   const [searchName, setSearchName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [fetchParams, setFetchParams] = useState(searchParams.toString());
+
   const { data, loading, error } = useData<PeopleResponse>(
-    `people?page=${currentPage}&search=${searchName}`
+    `people?${fetchParams}`
   );
-  const totalPages = data?.count ? Math.ceil(data?.count / 10) : 0;
+
+  const totalPages = data?.count ? Math.ceil(data?.count / maxPerson) : 0;
+
+  useEffect(() => {
+    searchParams.set("page", String(currentPage));
+    searchParams.set("search", searchName);
+    setFetchParams(searchParams.toString());
+  }, [currentPage, searchName]);
 
   useEffect(() => {
     if (searchName.length) {
@@ -54,15 +65,7 @@ export function People() {
       </Flex>
       <Filter value={searchName} onChange={handleSearchName} />
 
-      {error && (
-        <Error>
-          <Box mt={4}>
-            <Button tag="a" href="/" addonLeft={ReloadM}>
-              Reload page
-            </Button>
-          </Box>
-        </Error>
-      )}
+      {error && <ErrorLayout />}
 
       {!error && (
         <SpinContainer loading={loading} hMin={300}>
@@ -84,7 +87,7 @@ export function People() {
                 <Flex direction="column" alignItems="center">
                   <Box
                     tag={Link}
-                    to={`/person/${person.url.replace(
+                    to={`/${URL.person}/${person.url.replace(
                       /https:\/\/swapi.dev\/api\/people\//,
                       ""
                     )}`}

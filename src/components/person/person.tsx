@@ -1,8 +1,7 @@
 import { Link, useParams } from "react-router-dom";
-import { Box, Flex } from "@semcore/flex-box";
+import { Flex } from "@semcore/flex-box";
 import Button from "@semcore/button";
-import { Error, NoData } from "@semcore/widget-empty";
-import ReloadM from "@semcore/icon/Reload/m";
+import { NoData } from "@semcore/widget-empty";
 import SpinContainer from "@semcore/spin-container";
 import Card from "@semcore/card";
 import ArrowLeftL from "@semcore/icon/ArrowLeft/l";
@@ -15,6 +14,8 @@ import { useData } from "hooks";
 import { Fragment, ReactNode, useCallback, useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "helpers";
 import { MAP_KEYS_DESCRIPTION, MAP_KEYS_LIST_ENUM } from "types/consts";
+import { URL } from "helpers/consts";
+import { ErrorLayout } from "components/layout";
 
 const MAP_KEYS_LIST = Object.keys(MAP_KEYS_LIST_ENUM).filter(
   (name) => !["planet"].includes(name)
@@ -69,25 +70,15 @@ export function Person() {
     setIsEdit(false);
   }, [form, localStorageKey]);
 
-  console.log(123, form);
-
   return (
     <>
-      {error && (
-        <Error>
-          <Box mt={4}>
-            <Button tag="a" href="/" addonLeft={ReloadM}>
-              Reload page
-            </Button>
-          </Box>
-        </Error>
-      )}
+      {error && <ErrorLayout />}
 
       {!error && (
         <SpinContainer loading={loading} hMin={300}>
           <Card mx="2%" my={2}>
             <Card.Header tag={Flex} alignItems="center">
-              <Button tag={Link} use="tertiary" to="/" theme="muted">
+              <Button tag={Link} use="tertiary" to={URL.people} theme="muted">
                 <ArrowLeftL />
               </Button>
               <Card.Title tag="p" w="100%" bold size={600} textAlign="center">

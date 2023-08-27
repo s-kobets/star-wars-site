@@ -10,13 +10,14 @@ import ChevronRightL from "@semcore/icon/ChevronRight/l";
 import TimeNightL from "@semcore/icon/TimeNight/l";
 import TimeDayL from "@semcore/icon/TimeDay/l";
 import { NoMatch } from "pages/404";
+import { URL } from "helpers/consts";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="person/:id" element={<Person />} />
+        <Route path={`${URL.person}/:id`} element={<Person />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>
